@@ -15,7 +15,6 @@ import { Footer } from './components/Footer';
 
 
 const router = createBrowserRouter(
-
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route
@@ -32,9 +31,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <main className="main-container flex-column">
-      <div className="container-fluid flex-grow-1">
-        <RouterProvider router={router} />
+    <main className="main-container flex-column d-flex">
+      <div className="container-fluid flex-grow-1 row m-0 p-0">
+        <div className="row m-0">
+          <RouterProvider router={router} />
+        </div>
       </div>
       <Footer />
     </main>

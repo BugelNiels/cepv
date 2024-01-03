@@ -6,14 +6,14 @@ import { EventVisualizer } from '../components/EventVisualizer';
 function App() {
 
   return (
-    <div className="row justify-content-center">
+    <>
       <div className="col-4">
         <EventList />
       </div>
       <div className="col-8">
         <EventVisualizer />
       </div>
-    </div>
+    </>
   );
 }
 
