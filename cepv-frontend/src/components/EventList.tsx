@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ListGroup, FormControl, Button, InputGroup } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
+import { useFetch } from '../util/useFetch';
 
 interface LhcEvent {
     name: string;
@@ -10,6 +11,9 @@ interface LhcEvent {
 const EventList = () => {
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
+
+    const result = useFetch('api/event')
+    console.log(result)
 
 
     const handleListClick = (event: LhcEvent) => {

@@ -47,6 +47,8 @@ const EventVisualizer = () => {
                     <Box position={[-1.2, 0, 0]} />
 
                     <OrbitControls />
+
+                    <axesHelper args={[1]} />
                 </Canvas>
             </div>
         </>
