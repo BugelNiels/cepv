@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+# This is just a development image. The real frontend will be built
+# and deployed in an nginx container.
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 3000
+ENV CI=true
+
+CMD ["npm", "start"]
