@@ -4,6 +4,7 @@ import { ListGroup, FormControl, Button, InputGroup } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { Vector3 } from 'three';
 import { Stats, OrbitControls } from '@react-three/drei'
+import { useFetch } from '../util/useFetch';
 
 
 interface MeshProps {
@@ -13,6 +14,9 @@ interface MeshProps {
 const EventVisualizer = () => {
 
     const { eventId } = useParams();
+
+    const currentEvent = useFetch(`api/events/${eventId}`);
+    console.log("event: ", currentEvent, `api/events/${eventId}`);
 
     const Box = (props: MeshProps) => {
         // This reference gives us direct access to the THREE.Mesh object
