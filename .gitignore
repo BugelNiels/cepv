@@ -36,3 +36,5 @@ infrastructure/rawimgs
 .idea
 target
 .metals
+*.txt
+Events/
