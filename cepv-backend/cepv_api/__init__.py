@@ -25,7 +25,7 @@ def create_app(test_config=None):
         pass
 
 
-    from . import api
+    from . import routes
     app.register_blueprint(api.bp)
 
     return app

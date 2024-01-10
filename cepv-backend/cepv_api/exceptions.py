@@ -4,3 +4,7 @@ class InvalidUrlException(Exception):
 
 class EventNotFoundException(Exception):
     pass
+
+
+class FormatNotSupportedException(Exception):
+    pass
