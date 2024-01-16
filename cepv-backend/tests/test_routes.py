@@ -85,6 +85,8 @@ def test_record_valid_recid(client: FlaskClient) -> None:
                                 256544218}
 
     actual_data: list[dict] = response.json['runs']
+    assert "recId" in response.json
+    assert "recName" in response.json
     assert isinstance(actual_data, list), 'Json is not a list %s' % type(actual_data)
     assert len(actual_data) == len(ref_run_list), 'Number of items in response does not match expected items'
     for expected, actual in zip(ref_run_list, actual_data):

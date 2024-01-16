@@ -2,11 +2,12 @@ import pytest
 
 from cepv_api import create_app
 
+
 @pytest.fixture()
 def app():
-    app = create_app()
-    app.config.update({
+    app = create_app({
         "TESTING": True,
+        "CACHE_TYPE": "NullCache"
     })
 
     # other setup can go here

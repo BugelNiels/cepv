@@ -13,6 +13,8 @@ interface LhcRun {
 }
 
 interface RunsData {
+    recId: String;
+    recName: String;
     runs: LhcRun[];
 }
 
@@ -55,7 +57,7 @@ const EventList = () => {
             return (
                 <>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h3>Run {run.id.toString()}:</h3>
+                        <h4>Run {run.id.toString()}:</h4>
                         <span style={{ color: 'var(--secondary-text)' }}>Events: {eventItems.length} </span>
                     </div>
                     <ListGroup className="overflow-auto" style={{ maxHeight: '400px' }}>
@@ -67,11 +69,18 @@ const EventList = () => {
         }
         )
     }
+    // TODO: record name
 
     return (
         <>
-            <div className="row p-2 pt-3">
+            <div className="row p-4">
                 <button className='btn-modern' onClick={e => navigate("/")}><ArrowBackIcon fontSize="small" /> Back to Record Overview</button >
+            </div>
+            <div className="row p-2">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h2>{allEvents?.result?.recName}</h2>
+                    <span style={{ color: 'var(--secondary-text)' }}>ID: {recid} </span>
+                </div>
             </div>
             <div className="row p-2 pt-3">
                 <InputGroup className="col-md-12 mt-2">
