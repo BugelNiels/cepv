@@ -34,6 +34,6 @@ COPY . .
 
 EXPOSE 5000
 
-ENV FLASK_APP=flaskr
+ENV FLASK_APP=cepv_api
 
 CMD ["flask", "run", "--host", "0.0.0.0"]

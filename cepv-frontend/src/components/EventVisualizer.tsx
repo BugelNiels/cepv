@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Vector3 } from 'three';
 import { Stats, OrbitControls } from '@react-three/drei'
 import { useFetch } from '../util/useFetch';
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
 
 
 interface MeshProps {
@@ -13,10 +14,10 @@ interface MeshProps {
 
 const EventVisualizer = () => {
 
-    const { eventId } = useParams();
+    const { recid, runid, eventid } = useParams();
 
-    const currentEvent = useFetch(`api/events/${eventId}`);
-    console.log("event: ", currentEvent, `api/events/${eventId}`);
+    const currentEvent = useFetch(`/api/records/${recid}/runs/${runid}/events/${eventid}`);
+    console.log("event: ", currentEvent, `api/records/${recid}/runs/${runid}/events/${eventid}`);
 
     const Box = (props: MeshProps) => {
         // This reference gives us direct access to the THREE.Mesh object
@@ -33,13 +34,26 @@ const EventVisualizer = () => {
         )
     }
 
+    const getEventSummary = () => {
+        if (eventid == undefined) {
+            return (<></>);
+        }
+        return (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Record: {recid?.toString()}</span>
+                <span>Run: {runid?.toString()}</span>
+                <span>Event: {eventid?.toString()}</span>
+            </div>
+        )
+    }
+
     return (
         <>
             <div className="row justify-content-center">
-                <div className="col-10">
-                <h2>
-                    Event: {eventId}
-                </h2>
+                <div className="col-10 p-5">
+                    <h2>
+                        <ViewInArIcon fontSize='large'/> Event Visualizer
+                    </h2>
                 </div>
             </div>
             <div className="row h-75">
@@ -54,6 +68,10 @@ const EventVisualizer = () => {
 
                     <axesHelper args={[1]} />
                 </Canvas>
+            </div>
+
+            <div className="row p-5">
+                {getEventSummary()}
             </div>
         </>
     )

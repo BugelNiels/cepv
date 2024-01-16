@@ -1,38 +1,68 @@
 import React, { useState } from 'react'
 import { ListGroup, FormControl, Button, InputGroup } from 'react-bootstrap'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetch } from '../util/useFetch';
+import SearchIcon from '@mui/icons-material/Search';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import HdrStrongIcon from '@mui/icons-material/HdrStrong';
 
-interface LhcEvent {
-    name: string;
-    id: string;
+interface LhcRun {
+    id: Number;
+    directory: string;
+    events: Number[];
+}
+
+interface RunsData {
+    runs: LhcRun[];
 }
 
 const EventList = () => {
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState<string>('');
     const navigate = useNavigate();
 
-    const result = useFetch('api/event')
-    console.log(result)
+    const { recid } = useParams();
+
+    const allEvents: { result: RunsData | null } = useFetch<RunsData>(`/api/records/${recid}`);
+    console.log("recId:", recid, allEvents);
 
 
-    const handleListClick = (event: LhcEvent) => {
+    const handleEventListClick = (runId: Number, eventId: Number) => {
         return () => {
-            navigate(`events/${event.id}`);
+            navigate(`/records/${recid}/runs/${runId}/events/${eventId}`);
         }
     }
 
-    const getEventItems = () => {
 
-        const lhcEvents: LhcEvent[] = [{ name: "event1", id: "event1" }, { name: "event2", id: "event2" }];
+    const getEventItems = (lhcRuns: RunsData | null) => {
+        if (lhcRuns == null) {
+            console.log("events is null");
+            return;
+        }
+        console.log("displaying records");
 
-        return lhcEvents.filter((lhcEvent) => {
-            return (lhcEvent.name).toLowerCase().includes(search.toLowerCase());
-        }).map((lhcEvent) => {
+        return lhcRuns.runs.map((run: LhcRun) => {
+            const eventItems = run.events.filter((eventId: Number) => {
+                return (eventId.toString().includes(search.toLowerCase()));
+            }).map((eventId: Number) => {
+                return (
+                    <ListGroup.Item key={run.id.toString()} action onClick={handleEventListClick(run.id, eventId)}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span><HdrStrongIcon fontSize="small" /> Event {eventId.toString()}</span>
+                        </div>
+                    </ListGroup.Item>
+                )
+            })
             return (
-                <ListGroup.Item key={lhcEvent.id} action onClick={handleListClick(lhcEvent)}>
-                    {lhcEvent.name}
-                </ListGroup.Item>
+                <>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <h3>Run {run.id.toString()}:</h3>
+                        <span style={{ color: 'var(--secondary-text)' }}>Events: {eventItems.length} </span>
+                    </div>
+                    <ListGroup className="overflow-auto" style={{ maxHeight: '400px' }}>
+                        {eventItems}
+                    </ListGroup >
+                    <hr />
+                </>
             )
         }
         )
@@ -40,25 +70,23 @@ const EventList = () => {
 
     return (
         <>
-            <div className="row justify-content-center flex-fill text-center p-2 pt-3" style={{ color: "white" }}>
+            <div className="row p-2 pt-3">
+                <button className='btn-modern' onClick={e => navigate("/")}><ArrowBackIcon fontSize="small" /> Back to Record Overview</button >
+            </div>
+            <div className="row p-2 pt-3">
                 <InputGroup className="col-md-12 mt-2">
                     <InputGroup.Text>
-                        {/* <SearchIcon fontSize="small" /> */}
+                        <SearchIcon fontSize="small" />
                     </InputGroup.Text>
                     <FormControl autoFocus type="text" placeholder="Search..." onChange={(e) => { setSearch(e.target.value) }} />
                 </InputGroup>
             </div>
             <hr />
-            <div>
-                <ListGroup>
-                    {getEventItems()}
-                </ListGroup>
-                <hr />
+            <div className='text-start'>
+                {getEventItems(allEvents?.result)}
             </div>
         </>
     )
 }
 
 export { EventList };
-
-export type { LhcEvent };

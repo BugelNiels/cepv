@@ -24,8 +24,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
     from . import routes
-    app.register_blueprint(api.bp)
+    app.register_blueprint(routes.bp)
 
     return app

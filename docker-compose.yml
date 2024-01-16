@@ -8,6 +8,8 @@ services:
     ports:
       - '3000:3000'
     restart: always
+    volumes:
+      - ./cepv-frontend:/app
 
   backend-dev:
     build:
@@ -16,6 +18,7 @@ services:
     ports:
       - '5000:5000'
     # restart: always
+    
   
   reverse_proxy-dev:
     build:

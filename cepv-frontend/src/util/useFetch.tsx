@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react'
 
 
-const useFetch = (url: string) => {
 
-    const [result, setResult] = useState(null);
+const useFetch = <T,>(url: string) => {
+
+    const [result, setResult] = useState<T | null>(null);
 
     useEffect(() => {
-        console.log("|use effecting")
         const fetchStuff = async (fetchEndPoint: string) => {
             try {
+                console.log("Fetching");
                 const res = await fetch(fetchEndPoint);
                 if (!res.ok) {
-                    console.log(res);
+                    console.log("Invalid response from server:", res);
+                    return;
+                }
+                const data = await res.json();
+                if (data) {
+                    console.log("setting data", data);
+                    setResult(data);
                 } else {
-                    const json = await res.json();
-                    setResult(json);
+                    console.log("Data not present: ", data, res);
                 }
             } catch (err) {
-                console.log(err);
+                console.log("Error with fetching:", err);
             }
         }
         fetchStuff(url);

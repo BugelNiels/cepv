@@ -5,13 +5,14 @@ from flask import (Blueprint, jsonify)
 from flask.typing import ResponseReturnValue
 
 from cepv_api.exceptions import InvalidUrlException, EventNotFoundException, FormatNotSupportedException
-from cepv_api.cern_helpers import call_cern_api, get_all_runs, get_all_events_in_run, get_event_in_run, get_archive
+from cepv_api.cern_helpers import call_cern_api, get_all_runs, get_all_events_in_run, get_event_in_run, get_archive, \
+    extract_record_info, get_events_in_record
 
 bp: Blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 
 @bp.route('/records')
-def records() -> ResponseReturnValue:
+def get_records() -> ResponseReturnValue:
     try:
         query_options_single_item: str = 'page=1&size=1&subtype=Derived&type=Dataset&experiment=CMS&file_type=ig'
         response_num_hits: Response = call_cern_api('records/?%s' % query_options_single_item)
@@ -20,21 +21,21 @@ def records() -> ResponseReturnValue:
         query_options_all_items: str = 'page=1&size=%s&subtype=Derived&type=Dataset&experiment=CMS&file_type=ig' % num_hits
         response_all: Response = call_cern_api('records/?%s' % query_options_all_items)
         json_record_all: dict = response_all.json()
-        rec_ids: list[int] = list(map(lambda h: h['id'], json_record_all['hits']['hits']))
-        return rec_ids, 200
+        valid_records: list[dict] = extract_record_info(json_record_all)
+        return jsonify(records=valid_records), 200
     except InvalidUrlException as e:
         print(f'Error: {e}')
         return 'Invalid api request to CERN opendata API', 400
 
 
 @bp.route('/records/<rec_id>')
-def record_id(rec_id: int) -> ResponseReturnValue:
+def get_record_id(rec_id: int) -> ResponseReturnValue:
     if not rec_id.isdigit():
         return 'Invalid Record Id', 400
     try:
         (archive_name, archive_data) = get_archive(rec_id)
-        file_names: list[int] = get_all_runs(archive_data, archive_name)
-        return jsonify(runs=file_names), 200
+        run_data: list[dict] = get_events_in_record(archive_data, archive_name)
+        return jsonify(runs=run_data), 200
     except InvalidUrlException as e:
         print(f'Error: {e}')
         return 'Invalid Record Id', 400
@@ -47,7 +48,7 @@ def record_id(rec_id: int) -> ResponseReturnValue:
 
 
 @bp.route('/records/<rec_id>/runs/<run_id>')
-def record_run(rec_id: int, run_id: int) -> ResponseReturnValue:
+def get_record_run(rec_id: int, run_id: int) -> ResponseReturnValue:
     if not rec_id.isdigit():
         return 'Invalid Record Id', 400
     if not run_id.isdigit():
@@ -70,7 +71,7 @@ def record_run(rec_id: int, run_id: int) -> ResponseReturnValue:
 
 
 @bp.route('/records/<rec_id>/runs/<run_id>/events/<event_id>')
-def record_run_event(rec_id: int, run_id: int, event_id: int) -> ResponseReturnValue:
+def get_record_run_event(rec_id: int, run_id: int, event_id: int) -> ResponseReturnValue:
     if not rec_id.isdigit():
         return 'Invalid Record Id', 400
     if not run_id.isdigit():

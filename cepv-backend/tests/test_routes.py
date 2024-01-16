@@ -13,11 +13,13 @@ def test_records(client: FlaskClient) -> None:
     response: Response = client.get("/api/records")
     assert response.status_code == 200
     assert response.content_type == "application/json"
-    assert isinstance(response.json, list)
-    for item in response.json:
-        assert isinstance(item, numbers.Integral)
+    assert 'records' in response.json
+    for item in response.json['records']:
+        assert "name" in item, "key 'name' is not present in record item."
+        assert "run" in item, "key 'run' is not present in record item."
+        assert "id" in item, "key 'id' is not present in record item."
 
-    assert len(response.json) == 95
+    assert len(response.json['records']) > 0
 
 
 # Test getting a specific event
@@ -49,17 +51,48 @@ def test_record_negative_recid(client: FlaskClient) -> None:
 
 
 def test_record_valid_recid(client: FlaskClient) -> None:
+    # TODO: extract the asserts
     response: Response = client.get("/api/records/616")
+    assert response.content_type == "application/json"
     assert response.status_code == 200
     # see ..
-    ref_list: list[int] = [167674]
+    ref_run_list: list[int] = [167674]
 
-    actual_data: list[int] = response.json['runs']
+    ref_event_list: set[int] = {255488754,
+                                255528844,
+                                255540108,
+                                255544818,
+                                255576152,
+                                255579998,
+                                255628958,
+                                255642628,
+                                255696530,
+                                255715266,
+                                255743010,
+                                255770026,
+                                255781100,
+                                255831348,
+                                255845784,
+                                255863198,
+                                255922138,
+                                256195910,
+                                256253396,
+                                256275264,
+                                256294522,
+                                256298220,
+                                256539610,
+                                256540848,
+                                256544218}
+
+    actual_data: list[dict] = response.json['runs']
     assert isinstance(actual_data, list), 'Json is not a list %s' % type(actual_data)
-    assert len(actual_data) == len(ref_list), 'Number of items in response does not match expected items'
-    for expected, actual in zip(ref_list, actual_data):
-        assert isinstance(actual, numbers.Integral), 'Item in the json list is not a number'
-        assert expected == actual, 'Item does not match'
+    assert len(actual_data) == len(ref_run_list), 'Number of items in response does not match expected items'
+    for expected, actual in zip(ref_run_list, actual_data):
+        assert "id" in actual
+        assert "directory" in actual
+        assert "events" in actual
+        assert expected == actual["id"], 'Item does not match'
+        assert len(actual["events"]) == len(ref_event_list)
 
 
 # Test getting all runs within an event
