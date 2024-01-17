@@ -12,6 +12,7 @@ def create_app(test_config=None):
     if test_config is None:
         print("Production - Caching Enabled")
         # load the instance config, if it exists, when not testing
+        # TODO: extract to file
         app.config.from_mapping(
             DEBUG=True,
             CACHE_TYPE=os.environ['CACHE_TYPE'],
@@ -21,7 +22,6 @@ def create_app(test_config=None):
             CACHE_REDIS_URL=os.environ['CACHE_REDIS_URL'],
             CACHE_DEFAULT_TIMEOUT=os.environ['CACHE_DEFAULT_TIMEOUT'],
         )
-        print(app.config)
     else:
         print("Testing - Caching Disabled")
         # load the test config if passed in
