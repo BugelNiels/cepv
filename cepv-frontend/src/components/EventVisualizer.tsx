@@ -1,11 +1,9 @@
-import { Canvas, ReactThreeFiber, extend } from '@react-three/fiber';
-import React, { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
-import { Stats, OrbitControls, Stage, Line } from '@react-three/drei'
 import { useFetch } from '../util/useFetch';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
-import { LhcEvent, TypeTracksV3 } from '../types';
+import { LhcEvent } from '../types';
 import { LhcCanvas } from './webgl/LhcCanvas';
 import { ColliderPart, ColliderParts, defaultColliderParts } from '../data/ColliderParts';
 
@@ -81,7 +79,11 @@ const EventVisualizer = () => {
             </div>
 
             <div className="row p-5">
-                {getEventSummary(recid, runid, eventid)}
+                <div className="col-10">
+                    {getEventSummary(recid, runid, eventid)}
+                </div>
+                <div className="col-2">
+                </div>
             </div>
         </>
     )

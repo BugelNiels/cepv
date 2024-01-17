@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import MailIcon from "./icons/MailIcon";
 import GitHubIcon from "./icons/GitHubIcon";
 import LinkedInIcon from "./icons/LinkedInIcon";

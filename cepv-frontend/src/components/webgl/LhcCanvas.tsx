@@ -1,6 +1,6 @@
-import { Canvas, Vector3 } from '@react-three/fiber';
-import React, { Suspense, useRef, useState } from 'react'
-import { Stats, OrbitControls, Stage, Line, PerspectiveCamera, useGLTF, Environment } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react'
+import { OrbitControls, Line, useGLTF, Environment } from '@react-three/drei'
 import { LhcEvent } from '../../types';
 import { ColliderPart, ColliderParts, defaultColliderParts } from '../../data/ColliderParts';
 
@@ -13,7 +13,7 @@ interface LhcCanvasProps {
 const loadObj = (part: ColliderPart) => {
     const { scene } = useGLTF(part.path);
     return (
-        <primitive object={scene} color={part.color} position={[0, 0, 0]} />
+        <primitive object={scene} color={part.color} />
     );
 }
 
