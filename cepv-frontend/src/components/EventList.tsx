@@ -7,9 +7,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import HdrStrongIcon from '@mui/icons-material/HdrStrong';
 
 interface LhcRun {
-    id: Number;
+    id: number;
     directory: string;
-    events: Number[];
+    events: number[];
 }
 
 interface RunsData {
@@ -28,7 +28,7 @@ const EventList = () => {
     console.log("recId:", recid, allEvents);
 
 
-    const handleEventListClick = (runId: Number, eventId: Number) => {
+    const handleEventListClick = (runId: number, eventId: number) => {
         return () => {
             navigate(`/records/${recid}/runs/${runId}/events/${eventId}`);
         }
@@ -43,9 +43,9 @@ const EventList = () => {
         console.log("displaying records");
 
         return lhcRuns.runs.map((run: LhcRun) => {
-            const eventItems = run.events.filter((eventId: Number) => {
+            const eventItems = run.events.filter((eventId: number) => {
                 return (eventId.toString().includes(search.toLowerCase()));
-            }).map((eventId: Number) => {
+            }).map((eventId: number) => {
                 return (
                     <ListGroup.Item key={eventId.toString()} action onClick={handleEventListClick(run.id, eventId)}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

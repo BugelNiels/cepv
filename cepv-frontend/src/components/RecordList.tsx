@@ -9,7 +9,7 @@ import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
 interface LhcRecord {
     name: string;
     run: string;
-    id: Number;
+    id: number;
 }
 
 interface RecordsData {
@@ -17,7 +17,7 @@ interface RecordsData {
 }
 
 interface RunsData {
-    runs: Number[];
+    runs: number[];
 }
 
 const RecordList = () => {
