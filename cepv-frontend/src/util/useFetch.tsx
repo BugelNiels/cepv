@@ -9,7 +9,7 @@ const useFetch = <T,>(url: string) => {
     useEffect(() => {
         const fetchStuff = async (fetchEndPoint: string) => {
             try {
-                console.log("Fetching");
+                console.log("Fetching", url);
                 const res = await fetch(fetchEndPoint);
                 if (!res.ok) {
                     console.log("Invalid response from server:", res);

@@ -47,7 +47,7 @@ const EventList = () => {
                 return (eventId.toString().includes(search.toLowerCase()));
             }).map((eventId: Number) => {
                 return (
-                    <ListGroup.Item key={run.id.toString()} action onClick={handleEventListClick(run.id, eventId)}>
+                    <ListGroup.Item key={eventId.toString()} action onClick={handleEventListClick(run.id, eventId)}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span><HdrStrongIcon fontSize="small" /> Event {eventId.toString()}</span>
                         </div>
