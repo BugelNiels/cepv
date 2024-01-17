@@ -20,7 +20,7 @@ def create_app(test_config=None):
             CACHE_REDIS_PORT=os.environ['CACHE_REDIS_PORT'],
             CACHE_REDIS_DB=os.environ['CACHE_REDIS_DB'],
             CACHE_REDIS_URL=os.environ['CACHE_REDIS_URL'],
-            CACHE_DEFAULT_TIMEOUT=os.environ['CACHE_DEFAULT_TIMEOUT'],
+            CACHE_DEFAULT_TIMEOUT=os.environ['CACHE_DEFAULT_TIMEOUT']
         )
     else:
         print("Testing - Caching Disabled")

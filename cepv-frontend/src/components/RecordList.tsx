@@ -20,6 +20,7 @@ interface RunsData {
     runs: number[];
 }
 
+
 const RecordList = () => {
     const [search, setSearch] = useState<string>('');
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ const RecordList = () => {
     const allRecords: { result: RecordsData | null } = useFetch<RecordsData>('/api/records');
 
 
+    // TODO: use useCallback for these methods
     const handleRecordListClick = (record: LhcRecord) => {
         return () => {
             navigate(`/records/${record.id}`);
@@ -48,7 +50,7 @@ const RecordList = () => {
             return (
                 <ListGroup.Item key={lhcRecord.id.toString()} action onClick={handleRecordListClick(lhcRecord)}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span><ScatterPlotIcon fontSize="small"/> {lhcRecord.name}</span>
+                        <span><ScatterPlotIcon fontSize="small" /> {lhcRecord.name}</span>
                         <span style={{ color: 'var(--secondary-text)' }}>{lhcRecord.run}</span>
                     </div>
                 </ListGroup.Item>

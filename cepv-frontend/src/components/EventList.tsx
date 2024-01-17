@@ -25,8 +25,6 @@ const EventList = () => {
     const { recid } = useParams();
 
     const allEvents: { result: RunsData | null } = useFetch<RunsData>(`/api/records/${recid}`);
-    console.log("recId:", recid, allEvents);
-
 
     const handleEventListClick = (runId: number, eventId: number) => {
         return () => {
@@ -37,11 +35,8 @@ const EventList = () => {
 
     const getEventItems = (lhcRuns: RunsData | null) => {
         if (lhcRuns == null) {
-            console.log("events is null");
             return;
         }
-        console.log("displaying records");
-
         return lhcRuns.runs.map((run: LhcRun) => {
             const eventItems = run.events.filter((eventId: number) => {
                 return (eventId.toString().includes(search.toLowerCase()));
