@@ -6,10 +6,10 @@ function RecordPage() {
 
   return (
     <>
-      <div className="col-4 accent-comp">
+      <div className="col-3 accent-comp shadow-sm rounded">
         <RecordList />
       </div>
-      <div className="col-8">
+      <div className="col-9">
         <HomeText />
       </div>
     </>

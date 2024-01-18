@@ -1,8 +1,8 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react'
-import { OrbitControls, Line, useGLTF, Environment } from '@react-three/drei'
+import { OrbitControls, Environment } from '@react-three/drei'
 import { LhcEvent } from '../../types';
-import { ColliderPart, ColliderParts, defaultColliderParts } from '../../data/ColliderParts';
+import { ColliderParts } from '../../data/ColliderParts';
 import { BeamPipe } from './collider/BeamPipe';
 import { CathodeStripChambers } from './collider/CathodeStripChambers';
 import { DriftTubes } from './collider/DriftTubes';
@@ -26,6 +26,7 @@ import { TrackerInnerBarrelNeg } from './collider/TrackerInnerBarrelNeg';
 import { TrackerInnerBarrelPos } from './collider/TrackerInnerBarrelPos';
 import { TrackerOuterBarrel } from './collider/TrackerOuterBarrel';
 import { TrackerInnerBarrel } from './collider/TrackerInnerBarrel';
+import { Tracks } from './Tracks';
 
 type EnvironmentPreset = "apartment" | "city" | "dawn" | "forest" | "lobby" | "night" | "park" | "studio" | "sunset" | "warehouse" | undefined;
 
@@ -36,27 +37,9 @@ interface LhcCanvasProps {
     backgroundPreset: EnvironmentPreset;
 }
 
-const tracks = (currentLhcEvent: { result: LhcEvent | null }) => {
-    if (currentLhcEvent == undefined || currentLhcEvent.result == null) {
-        return;
-    }
-    const tracksV3: [] = currentLhcEvent.result.event.Collections.Tracks_V3;
-    return tracksV3.map(track => {
-        return (
-            <Line
-                points={[
-                    [0, 0, 0],
-                    track[0],
-                ]}
-                color={track[1]}
-            />
-        )
-    });
-}
-
 // TODO: see if we can do this dynamically?
 const getCollidorParts = (parts: ColliderParts) => {
-    const scale: number = 0.1;
+    const scale: number = 1;
     return (
         <group scale={[scale, scale, scale]}>
             {<BeamPipe part={parts.beamPipe} />}
@@ -86,12 +69,11 @@ const getCollidorParts = (parts: ColliderParts) => {
     )
 }
 
+// TODO: at some point, switch preset as it is not suitable for a production environment
 const LhcCanvas = (props: LhcCanvasProps) => {
-
-
     return (
-        <Canvas camera={{ fov: 35, zoom: 1, near: 0.01, far: 1000 }}>
-            {tracks(props.currentEvent)}
+        <Canvas className='rounded shadow' shadows camera={{ fov: 35, zoom: 1, near: 0.01, far: 500 }} style={{flex: "1 1 auto"}}>
+            <Tracks result={props.currentEvent.result} />
             <Suspense fallback={null}>
                 {getCollidorParts(props.colliderPartsEnabled)}
             </Suspense>

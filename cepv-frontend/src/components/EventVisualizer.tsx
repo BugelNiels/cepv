@@ -3,6 +3,8 @@ import { Dropdown, Form } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom';
 import { useFetch } from '../util/useFetch';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
+import BuildIcon from '@mui/icons-material/Build';
+import TungstenIcon from '@mui/icons-material/Tungsten';
 import { LhcEvent } from '../types';
 import { EnvironmentPreset, LhcCanvas } from './webgl/LhcCanvas';
 import { ColliderPart, ColliderParts, defaultColliderParts } from '../data/ColliderParts';
@@ -25,8 +27,7 @@ const EventVisualizer = () => {
 
     const { recid, runid, eventid } = useParams();
 
-    const currentEvent: { result: LhcEvent | null } = useFetch<LhcEvent | null>(`/api/records/${recid}/runs/${runid}/events/${eventid}`);
-    // TODO: extract into separate file
+    const currentEvent: { result: LhcEvent | null } = eventid === undefined ? {result: null} : useFetch<LhcEvent | null>(`/api/records/${recid}/runs/${runid}/events/${eventid}`);
     const [colliderPartsEnabled, setColliderPartsEnabled] = useState<ColliderParts>(defaultColliderParts);
     const [envPreset, setEnvPreset] = useState<EnvironmentPreset>("sunset");
 
@@ -56,7 +57,7 @@ const EventVisualizer = () => {
 
         return (
             <>
-                <b>Collider Parts:</b>
+                <b><BuildIcon /> Collider Parts:</b>
                 <Form className='text-start'>
                     {checkBoxes}
                 </Form>
@@ -68,7 +69,7 @@ const EventVisualizer = () => {
 
         return (
             <>
-                <b>Lighting:</b>
+                <b><TungstenIcon /> Lighting:</b>
                 <Form className='text-start'>
                     <Form.Check
                         defaultChecked
@@ -105,8 +106,10 @@ const EventVisualizer = () => {
                         <ViewInArIcon fontSize='large' /> Event Visualizer
                     </h2>
                 </div>
+                <div className="col-2">
+                </div>
             </div>
-            <div className="row h-75">
+            <div className="row flex-row d-flex flex-grow-1">
                 <div className="col-10">
                     <LhcCanvas currentEvent={currentEvent} colliderPartsEnabled={colliderPartsEnabled} backgroundPreset={envPreset} />
                 </div>

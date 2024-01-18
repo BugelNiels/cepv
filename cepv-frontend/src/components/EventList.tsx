@@ -5,6 +5,7 @@ import { useFetch } from '../util/useFetch';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import HdrStrongIcon from '@mui/icons-material/HdrStrong';
+import FolderIcon from '@mui/icons-material/Folder';
 
 interface LhcRun {
     id: number;
@@ -52,10 +53,10 @@ const EventList = () => {
             return (
                 <>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h4>Run {run.id.toString()}:</h4>
+                        <h5><FolderIcon /> Run {run.id.toString()}:</h5>
                         <span style={{ color: 'var(--secondary-text)' }}>Events: {eventItems.length} </span>
                     </div>
-                    <ListGroup className="overflow-auto" style={{ maxHeight: '400px' }}>
+                    <ListGroup className="overflow-auto" style={{ maxHeight: '50vh' }}>
                         {eventItems}
                     </ListGroup >
                     <hr />
@@ -64,7 +65,6 @@ const EventList = () => {
         }
         )
     }
-    // TODO: record name
 
     return (
         <>

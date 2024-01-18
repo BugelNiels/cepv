@@ -4,14 +4,12 @@ import { EventList } from '../components/EventList';
 
 function EventPage() {
 
-  console.log("rendering");
-
   return (
     <>
-      <div className="col-2 accent-comp">
+      <div className="col-2 accent-comp shadow-sm rounded">
         <EventList />
       </div>
-      <div className="col-10 p-0">
+      <div className="col-10 p-4 d-flex flex-column">
         <EventVisualizer />
       </div>
     </>

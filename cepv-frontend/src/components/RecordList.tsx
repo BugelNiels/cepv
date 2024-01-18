@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useFetch } from '../util/useFetch';
 import SearchIcon from '@mui/icons-material/Search';
 import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
+import AppsIcon from '@mui/icons-material/Apps';
 
 
 interface LhcRecord {
@@ -37,10 +38,8 @@ const RecordList = () => {
 
     const getRecordItems = (lhcRecords: RecordsData | null) => {
         if (lhcRecords == null) {
-            console.log("records is null")
             return;
         }
-        console.log("displaying records")
         return lhcRecords.records.filter((lhcRecord) => {
             return (lhcRecord.name).toLowerCase().includes(search.toLowerCase())
                 || (lhcRecord.run).toLowerCase().includes(search.toLowerCase())
@@ -61,7 +60,7 @@ const RecordList = () => {
     return (
         <div className='m-2'>
             <div className="row p-5">
-                <h2>Records</h2>
+                <h2><AppsIcon /> Records</h2>
             </div>
             <div className="row p-2 pt-3">
                 <InputGroup className="col-md-12 mt-2">

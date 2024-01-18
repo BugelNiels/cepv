@@ -17,10 +17,8 @@ const useFetch = <T,>(url: string) => {
                 }
                 const data = await res.json();
                 if (data) {
-                    console.log("setting data", data);
                     setResult(data);
                 } else {
-                    console.log("Data not present: ", data, res);
                 }
             } catch (err) {
                 console.log("Error with fetching:", err);
