@@ -26,8 +26,9 @@ const HomeText = () => {
                     <h3>Built using</h3>
                     <p className='p-5' style={{ fontSize: "large" }}>
                         <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#2f74c0" }}>Typescript</Badge>
-                        <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#346c9c" }}>Python</Badge>
                         <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#1ba1cc" }}>React</Badge>
+                        <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#346c9c" }}>Python</Badge>
+                        <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#346c9c" }}>Flask</Badge>
                         <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#d93327" }}>Redis</Badge>
                         <Badge pill bg="primary p-2 m-3">Three.js</Badge>
                         <Badge pill bg="primary p-2 m-3" style={{ backgroundColor: "#2b9aee" }}>Docker</Badge>
