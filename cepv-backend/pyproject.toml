@@ -1,0 +1,11 @@
+[project]
+name = "cepv_api"
+version = "0.1.0"
+description = "API for event collision data."
+dependencies = [
+    "flask",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"

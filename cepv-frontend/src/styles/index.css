@@ -1,0 +1,156 @@
+:root {
+  --primary: rgba(28,44,56,1);
+  --secondary: #333333;
+  --accent: #cccccc;
+  --active: #cccccc;
+  --highlight: #adadad;
+  --primary-text: #212427;
+  --secondary-text: #727d88;
+}
+
+body, body * {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-margin-top: 100px;
+
+}
+
+.accent-comp {
+  background-color: #e4e7ec;
+  border: 1px solid var(--accent);
+}
+
+.main-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f4f7;
+}
+
+.svg-icon svg path{
+  fill: red !important;
+}
+
+.secondary-comp {
+  background-color: var(--primary);
+  color: var(--highlight);
+}
+
+.sub-text {
+  color: #7c7c7c;
+  font-size: large;
+}
+
+.sub-title {
+  color: #4d4d4d;
+  font-size: large;
+}
+
+.image-container {
+  position: relative;
+  height: 100%;
+}
+
+.image-container img {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.read-more-link {
+  color: #126ffd;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.center-aligned-left-lg {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .center-aligned-left-lg {
+      text-align: left;
+  }
+}
+
+.time-period {
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .time-period {
+      text-align: right;
+  }
+}
+
+.education-link {
+  text-decoration: none;
+}
+
+.clickable-link {
+  overflow: hidden;
+  color: var(--active);
+  text-decoration: none;
+}
+
+.clickable-link:hover {
+  color: var(--highlight);
+}
+
+@media (max-width: 767px) {
+  .clickable-link span {
+      display: none;
+  }
+}
+
+.navbar {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nav-link {
+  padding: 13px 40px 13px !important;
+  margin: 0 15px 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  background-color: hsl(220, 13%, 94%);
+}
+
+.material-icons {
+  margin: auto;
+}
+
+.footer-icon {
+  transform: scale(1.0);
+}
+
+.btn-modern {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-modern:hover {
+  background-color: var(--secondary);
+}
