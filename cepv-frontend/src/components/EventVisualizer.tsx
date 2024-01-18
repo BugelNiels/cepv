@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Form } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useFetch } from '../util/useFetch';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import { LhcEvent } from '../types';
@@ -14,7 +14,7 @@ const getEventSummary = (recId: string | undefined, runId: string | undefined, e
     }
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>Record: {recId}</span>
+            <span><Link to={`https://opendata.cern.ch/record/${recId}`}>Record: {recId}</Link></span>
             <span>Run: {runId}</span>
             <span>Event: {eventId}</span>
         </div>
