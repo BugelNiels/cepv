@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Form } from 'react-bootstrap'
+import { Dropdown, Form } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom';
 import { useFetch } from '../util/useFetch';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import { LhcEvent } from '../types';
-import { LhcCanvas } from './webgl/LhcCanvas';
+import { EnvironmentPreset, LhcCanvas } from './webgl/LhcCanvas';
 import { ColliderPart, ColliderParts, defaultColliderParts } from '../data/ColliderParts';
 
 
@@ -28,6 +28,7 @@ const EventVisualizer = () => {
     const currentEvent: { result: LhcEvent | null } = useFetch<LhcEvent | null>(`/api/records/${recid}/runs/${runid}/events/${eventid}`);
     // TODO: extract into separate file
     const [colliderPartsEnabled, setColliderPartsEnabled] = useState<ColliderParts>(defaultColliderParts);
+    const [envPreset, setEnvPreset] = useState<EnvironmentPreset>("sunset");
 
     const handleCheckboxChange = (checkboxName: keyof ColliderParts) => {
         setColliderPartsEnabled((prevValues) => ({
@@ -54,9 +55,45 @@ const EventVisualizer = () => {
         })
 
         return (
-            <Form className='text-start'>
-                {checkBoxes}
-            </Form>
+            <>
+                <b>Collider Parts:</b>
+                <Form className='text-start'>
+                    {checkBoxes}
+                </Form>
+            </>
+        );
+    }
+
+    const EnvironmentDropdown = () => {
+
+        return (
+            <>
+                <b>Lighting:</b>
+                <Form className='text-start'>
+                    <Form.Check
+                        defaultChecked
+                        name="envPreset"
+                        type="radio"
+                        key="sunset"
+                        label="Default"
+                        onChange={() => setEnvPreset("sunset")}
+                    />
+                    <Form.Check
+                        name="envPreset"
+                        type="radio"
+                        key="studio"
+                        label="Bright"
+                        onChange={() => setEnvPreset("studio")}
+                    />
+                    <Form.Check
+                        name="envPreset"
+                        type="radio"
+                        key="night"
+                        label="Dark"
+                        onChange={() => setEnvPreset("night")}
+                    />
+                </Form>
+            </>
         );
     }
 
@@ -71,10 +108,12 @@ const EventVisualizer = () => {
             </div>
             <div className="row h-75">
                 <div className="col-10">
-                    <LhcCanvas currentEvent={currentEvent} colliderPartsEnabled={colliderPartsEnabled} />
+                    <LhcCanvas currentEvent={currentEvent} colliderPartsEnabled={colliderPartsEnabled} backgroundPreset={envPreset} />
                 </div>
-                <div className="col-2">
+                <div className="col-2 text-start">
                     {CollidorVisList()}
+                    <hr />
+                    {EnvironmentDropdown()}
                 </div>
             </div>
 

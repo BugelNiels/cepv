@@ -27,10 +27,13 @@ import { TrackerInnerBarrelPos } from './collider/TrackerInnerBarrelPos';
 import { TrackerOuterBarrel } from './collider/TrackerOuterBarrel';
 import { TrackerInnerBarrel } from './collider/TrackerInnerBarrel';
 
+type EnvironmentPreset = "apartment" | "city" | "dawn" | "forest" | "lobby" | "night" | "park" | "studio" | "sunset" | "warehouse" | undefined;
+
 
 interface LhcCanvasProps {
     currentEvent: { result: LhcEvent | null };
     colliderPartsEnabled: ColliderParts;
+    backgroundPreset: EnvironmentPreset;
 }
 
 const tracks = (currentLhcEvent: { result: LhcEvent | null }) => {
@@ -92,11 +95,11 @@ const LhcCanvas = (props: LhcCanvasProps) => {
             <Suspense fallback={null}>
                 {getCollidorParts(props.colliderPartsEnabled)}
             </Suspense>
-            <Environment preset="city" background blur={1} />
+            <Environment preset={props.backgroundPreset} background blur={1} />
             <OrbitControls />
         </Canvas>
     )
 }
 
 export { LhcCanvas };
-export type { LhcCanvasProps };
+export type { LhcCanvasProps, EnvironmentPreset };
