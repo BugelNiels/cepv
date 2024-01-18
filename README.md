@@ -8,6 +8,7 @@
 </p>
 
 [![Built With](https://skillicons.dev/icons?i=ts,react,threejs,python,flask,docker)](https://skillicons.dev)
+
 ![stars](https://img.shields.io/github/stars/bugelniels/cepv.svg) ![watchers](https://img.shields.io/github/watchers/bugelniels/cepv.svg) ![license](https://img.shields.io/github/license/bugelniels/cepv.svg) ![follow](https://img.shields.io/github/followers/bugelniels.svg?style=social&label=Follow&maxAge=2592000)
 
 ## About the project
@@ -19,6 +20,7 @@ Before you ask "but isn't there already an event display for this data", the ans
 The website uses the CERN Open Data API to retrieve the displayable records. The visualization itself only displays the CMS detector itself and the tracks produced by the collision event. The project is still under development, so more feature might be added in the future.
 
 ![Screenshot](/images/screenshot.png)
+
 ![Screenshot](/images/screenshotTracks.png)
 
 ## Built With
