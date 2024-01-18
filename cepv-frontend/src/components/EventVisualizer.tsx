@@ -27,7 +27,7 @@ const EventVisualizer = () => {
 
     const { recid, runid, eventid } = useParams();
 
-    const currentEvent: { result: LhcEvent | null } = eventid === undefined ? {result: null} : useFetch<LhcEvent | null>(`/api/records/${recid}/runs/${runid}/events/${eventid}`);
+    const currentEvent: { result: LhcEvent | null } = useFetch<LhcEvent | null>(`/api/records/${recid}/runs/${runid}/events/${eventid}`);
     const [colliderPartsEnabled, setColliderPartsEnabled] = useState<ColliderParts>(defaultColliderParts);
     const [envPreset, setEnvPreset] = useState<EnvironmentPreset>("sunset");
 
