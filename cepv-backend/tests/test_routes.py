@@ -210,55 +210,105 @@ def test_get_record_run_json_contains_expected_events(client: FlaskClient) -> No
 # Test getting all runs within an event
 # should return the collision events within said run
 
-def test_get_record_run_event_invalid_event_string_returns_400(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/198230/events/abc")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 198230, "abc"),
+])
+def test_get_record_run_event_invalid_event_string_returns_400(client: FlaskClient, rec_id: str, run_id: str,
+                                                               event_id: str) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert response.status_code == 400
     assert b"Invalid Event Id" in response.data
 
 
-def test_get_record_run_event_invalid_event_string_numbers(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/198230/events/123abc")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 198230, "123abc"),
+])
+def test_get_record_run_event_invalid_event_string_numbers(client: FlaskClient, rec_id: str, run_id: str,
+                                                           event_id: str) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert response.status_code == 400
     assert b"Invalid Event Id" in response.data
 
 
-def test_get_record_run_event_nonexistent_event(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/198230/events/45366")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 198230, 45366),
+])
+def test_get_record_run_event_nonexistent_event(client: FlaskClient, rec_id: int, run_id: int, event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert response.status_code == 400
     assert b"Invalid Event Id" in response.data
 
 
-def test_get_record_run_event_negative_event(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/198230/events/-45366")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 198230, -400),
+])
+def test_get_record_run_event_negative_event(client: FlaskClient, rec_id: int, run_id: int, event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert response.status_code == 400
     assert b"Invalid Event Id" in response.data
 
 
-def test_get_record_run_event_returns_200(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/167674/events/255488754")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 167674, 255488754),
+    (600, 149291, 510048074),
+])
+def test_get_record_run_event_returns_200(client: FlaskClient, rec_id: int, run_id: int, event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert response.status_code == 200
 
 
-def test_get_record_run_event_returns_json(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/167674/events/255488754")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 167674, 255488754),
+    (600, 149291, 510048074),
+])
+def test_get_record_run_event_returns_json(client: FlaskClient, rec_id: int, run_id: int, event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert response.content_type == "application/json"
 
 
-def test_get_record_run_event_json_contains_event(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/167674/events/255488754")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 167674, 255488754),
+    (600, 149291, 510048074),
+])
+def test_get_record_run_event_json_contains_event(client: FlaskClient, rec_id: int, run_id: int, event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert 'event' in response.json
 
 
-def test_get_record_run_event_json_contains_types(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/167674/events/255488754")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 167674, 255488754),
+    (600, 149291, 510048074),
+])
+def test_get_record_run_event_json_contains_types(client: FlaskClient, rec_id: int, run_id: int, event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert 'Types' in response.json['event']
 
 
-def test_get_record_run_event_json_contains_collections(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/167674/events/255488754")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 167674, 255488754),
+    (600, 149291, 510048074),
+])
+def test_get_record_run_event_json_contains_collections(client: FlaskClient, rec_id: int, run_id: int,
+                                                        event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert 'Collections' in response.json['event']
 
 
-def test_get_record_run_event_json_contains_associations(client: FlaskClient) -> None:
-    response: Response = client.get("/api/records/616/runs/167674/events/255488754")
+@pytest.mark.parametrize("rec_id, run_id, event_id", [
+    (616, 167674, 255488754),
+    (600, 149291, 510048074),
+])
+def test_get_record_run_event_json_contains_associations(client: FlaskClient, rec_id: int, run_id: int,
+                                                         event_id: int) -> None:
+    cepv_api_url: str = "/api/records/%s/runs/%s/events/%s" % (rec_id, run_id, event_id)
+    response: Response = client.get(cepv_api_url)
     assert 'Associations' in response.json['event']
