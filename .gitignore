@@ -38,3 +38,6 @@ target
 .metals
 *.txt
 Events/
+
+# env
+.env
