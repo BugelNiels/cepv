@@ -126,7 +126,9 @@ def get_event_in_run(archive_data: io.BytesIO, archive_name: str, run_id: int, e
                 if run_name in archive_ref.getnames():
                     # Read the contents of the file into a variable
                     with archive_ref.extractfile(run_name) as file:
-                        content: dict = json.load(file)
+                        json_string: str = file.read().decode("utf-8")
+                        json_string = json_string.replace("nan", "null")
+                        content: dict = json.loads(json_string)
                         return content
                 raise EventNotFoundException('Could not find event: %s' % run_name)
         case '.zip' | '.ig':
@@ -134,7 +136,9 @@ def get_event_in_run(archive_data: io.BytesIO, archive_name: str, run_id: int, e
                 if run_name in archive_ref.namelist():
                     # Read the contents of the file into a variable
                     with archive_ref.open(run_name) as file:
-                        content: dict = json.load(file)
+                        json_string: str = file.read().decode("utf-8")
+                        json_string = json_string.replace("nan", "null")
+                        content: dict = json.loads(json_string)
                         return content
                 raise EventNotFoundException('Could not find event: %s' % run_name)
         case _:
